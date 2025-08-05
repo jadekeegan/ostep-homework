@@ -6,15 +6,15 @@
 
 int NUM_ITERATIONS = 1000000;
 
+// Measure the cost of a system call by timing a 0 byte read operation.
+// To take the average over many syscalls, time from before we start the reads to after we 
+// finish all the reads, and then divide the total time by the number of iterations.
 float measureSystemCallCost(void) {
     struct timespec start, end;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
     int fd = open("./os-costs.txt", O_RDONLY);
     for (size_t i=0; i < NUM_ITERATIONS; i++) {
-        // Perform a simple system call, e.g., read from stdin
-        // This is a no-op read to measure the cost of the system call itself
-        // without any actual data processing.
       read(0, NULL, 0);
     }
 
